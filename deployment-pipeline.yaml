@@ -106,6 +106,11 @@ Resources:
                   - codebuild:StartBuild
                   - codebuild:BatchGetBuilds
                   - iam:PassRole
+              - Resource:
+                  - !Ref NotificationTopic
+                Effect: Allow
+                Action:
+                  - sns:Publish
 
   ArtifactBucket:
     Type: AWS::S3::Bucket
