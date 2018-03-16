@@ -42,6 +42,10 @@ Parameters:
     Description: >
       Token for the user specified above. (https://github.com/settings/tokens)
 
+  NotificationTopic:
+    Type: String
+    Description: Notification Topic ARN for manual approval.
+
   TemplateBucket:
     Type: String
     Default: ecs-refarch-continuous-deployment
@@ -94,7 +98,7 @@ Resources:
   DeploymentPipeline:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: !Sub "https://s3.amazonaws.com/${TemplateBucket}/templates/deployment-pipeline.yaml"
+      TemplateURL: !Sub "https://s3.amazonaws.com/cloudformation-eu-central-1-449158228586/ecs/deployment-pipeline.yaml"
       Parameters:
         Cluster: !GetAtt Cluster.Outputs.ClusterName
         Service: !GetAtt Service.Outputs.Service
@@ -102,6 +106,7 @@ Resources:
         GitHubToken: !Ref GitHubToken
         GitHubRepo: !Ref GitHubRepo
         GitHubBranch: !Ref GitHubBranch
+        NotificationTopic: !Ref NotificationTopic
 
   LoadBalancer:
     Type: AWS::CloudFormation::Stack
